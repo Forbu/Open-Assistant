@@ -7,16 +7,13 @@ SHELL ["/bin/bash", "-c"]
 
 # install git, python & torch
 RUN apt update && \
-    apt install -y vim git python3.10 python3.10-venv && \
+    apt install -y vim git python3.10 python3.10-venv python3.10-dev && \
     python3.10 -m venv venv
 
-RUN source venv/bin/activate && \
-    pip install torch==1.13.1
+COPY . /workspace/Open-Assistant
 
 # clone OA repo & install dependencies
-RUN apt install -y python3.10-dev && \
-    git clone https://github.com/LAION-AI/Open-Assistant.git && \
-    source venv/bin/activate && \
+RUN source venv/bin/activate && \
     pip install -e /workspace/Open-Assistant/oasst-data \
     pip install -e /workspace/Open-Assistant/model
 
