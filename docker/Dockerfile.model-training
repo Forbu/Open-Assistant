@@ -12,11 +12,19 @@ RUN apt update && \
 
 COPY . /workspace/Open-Assistant
 
+# install curl
+RUN apt install -y curl
+
+# install pip
+RUN curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py && \
+    python3.10 get-pip.py && \
+    pip install --upgrade pip
+
 # clone OA repo & install dependencies
 RUN pip install -e /workspace/Open-Assistant/oasst-data \
     pip install -e /workspace/Open-Assistant/model
 
-RUN pip install flash-attn
+RUN pip install flash-attn==1.0.5
 
 
 WORKDIR /workspace/Open-Assistant/model/model_training
